@@ -21,7 +21,6 @@ divEl.insertAdjacentHTML('afterbegin', galleryItemEls);
 
 const handleSubmit = event => {
   event.preventDefault();
-  const imageClassEl = document.querySelector('.gallery__image');
   if (event.target.nodeName !== 'IMG') {
     return;
   }
@@ -32,11 +31,14 @@ const handleSubmit = event => {
 
   instance.show();
 
-  document.addEventListener('keydown', event => {
+  const handleKeydown = event => {
     if (event.code === 'Escape') {
+      document.removeEventListener('keydown', handleKeydown);
       return instance.close();
     }
-  });
+  };
+
+  document.addEventListener('keydown', handleKeydown);
 };
 
 divEl.addEventListener('click', handleSubmit);
